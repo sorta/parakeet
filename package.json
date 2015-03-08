@@ -1,0 +1,27 @@
+{
+  "name": "parakeet",
+  "version": "0.0.1",
+  "description": "A lightweight CSS grid based on Flexbox",
+  "main": "index.js",
+  "dependencies": {
+    "browser-sync": "^2.2.1",
+    "gulp": "^3.8.11"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.2.1",
+    "gulp": "^3.8.11"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sorta/parakeet.git"
+  },
+  "author": "Sophie Orta",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sorta/parakeet/issues"
+  },
+  "homepage": "https://github.com/sorta/parakeet"
+}
