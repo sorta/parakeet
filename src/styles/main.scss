@@ -1,0 +1,22 @@
+// Variables
+$pageWidth: 1200px;
+
+// Mixins
+
+// Styles
+.pk-page {
+    max-width: $pageWidth;
+    margin: 0 auto;
+}
+
+.pk-grid {
+    display: flex;
+}
+
+.pk-block {
+    flex: 0 0 auto;
+}
+
+.pk-1-1 {
+    width: 100%;
+}
