@@ -1,12 +1,78 @@
 // Variables
-$pageWidth: 1200px;
+$breakpoints: (
+    xs:  0px,
+    sm:  568px,
+    md:  768px,
+    lg:  1200px,
+    xl:  1600px,
+    xxl: 1920px,
+);
+$breakpoint-classes: (sm md lg);
+$pageWidth: map-get($breakpoints, lg);
+
+
+$base-font-size: 100% !default;
+//$base-line-height: 150%;
+
+// It strips the unit of measure and returns it
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
+
+$rem-base: strip-unit($base-font-size*0.16) * 1px;
+
+@function convert-to-rem($value, $base-value: $rem-base)  {
+  $value: strip-unit($value) / strip-unit($base-value) * 1rem;
+  @if ($value == 0rem) { $value: 0; } // Turn 0em into 0
+  @return $value;
+}
+
+@function rem-calc($values, $base-value: $rem-base) {
+  $max: length($values);
+
+  @if $max == 1 { @return convert-to-rem(nth($values, 1), $base-value); }
+
+  $remValues: ();
+  @for $i from 1 through $max {
+    $remValues: append($remValues, convert-to-rem(nth($values, $i), $base-value));
+  }
+  @return $remValues;
+}
 
 // Mixins
+
+// @mixin rem-fallback($property, $values...) {
+//     $max: length($values);
+//     $pxValues: '';
+//     $remValues: '';
+
+//     @for $i from 1 through $max {
+//         $value: strip-unit(nth($values, $i));
+//         $pxValues: #{$pxValues + $value*16}px;
+
+//         @if $i < $max {
+//             $pxValues: #{$pxValues + " "};
+//         }
+//     }
+
+//     @for $i from 1 through $max {
+//         $value: strip-unit(nth($values, $i));
+//         $remValues: #{$remValues + $value}rem;
+
+//         @if $i < $max {
+//             $remValues: #{$remValues + " "};
+//         }
+//     }
+
+//     #{$property}: $pxValues;
+//     #{$property}: $remValues;
+// }
 
 // Styles
 .pk-page {
     max-width: $pageWidth;
     margin: 0 auto;
+    font-size: rem-calc(20px);
 }
 
 .pk-grid {
@@ -14,7 +80,7 @@ $pageWidth: 1200px;
 }
 
 .pk-block {
-    flex: 0 0 auto;
+    flex: 0 1 auto;
 }
 
 .pk-1-1 {

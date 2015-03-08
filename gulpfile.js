@@ -7,11 +7,12 @@ var gulp = require('gulp'),
 
 gulp.task('styles', function () {
     return gulp.src('src/styles/main.scss')
+        .pipe(plugins.plumber())
         .pipe(plugins.sourcemaps.init())
         .pipe(plugins.sass())
         .pipe(plugins.autoprefixer({browsers: ['last 2 version']}))
         .pipe(plugins.minifyCss())
-        .pipe(plugins.sourcemaps.write())
+        .pipe(plugins.sourcemaps.write('./maps'))
         .pipe(gulp.dest('examples/styles'))
         .pipe(reload({stream: true}));
 });
