@@ -77,18 +77,50 @@ $page-width: map-get($breakpoints, lg);
 // Grid //
 //////////
 $columns: 12;
+
 $gutter-size: 20px;
 $gutter-half: ($gutter-size/2);
+
 $fluid-gutter-size: 2%;
 $fluid-gutter-half: ($fluid-gutter-size/2);
 
+$fluid-gutter-vert-size: 2vh;
+$fluid-gutter-vert-half: ($fluid-gutter-vert-size/2);
+
+$page-pad: 10px;
+$grid-pad: 10px;
+$block-pad: 10px;
+
+// Make col/row widths/heights
 @for $i from 1 through $columns {
     @for $j from 1 through $columns {
         .pk-w-#{$i}-#{$j} {
-            width: ($i/$j) * 100%;
+            width: ((($i/$j) * 100%)-$fluid-gutter-size);
+        }
+
+        .pk-v-#{$i}-#{$j} {
+            height: ($i/$j) * 100vh;
         }
     }
 }
+
+$alignments: (
+    start: flex-start,
+    end: flex-end,
+    center: center,
+    baseline: baseline,
+    stretch: stretch,
+    inherit: inherit
+);
+
+$justifications: (
+    start: flex-start,
+    end: flex-end,
+    center: center,
+    around: space-around,
+    between: space-between,
+    inherit: inherit
+);
 
 /////////////////
 // Backgrounds //
@@ -107,24 +139,91 @@ body {
     background-color: $body-bg;
 }
 
+// Page (to be removed?)
 .pk-page {
     max-width: $page-width;
     margin: 0 auto;
     background-color: $page-bg;
+    padding: $page-pad;
+    padding: rem-calc($page-pad);
+    box-sizing: border-box;
 }
 
+// Grid
 .pk-grid {
     display: flex;
     background-color: $grid-bg;
+    padding: $grid-pad;
+    padding: rem-calc($grid-pad);
+
+    @each $prop-name, $prop-val in $alignments {
+        &.pk-align-#{$prop-name} {
+            align-items: $prop-val;
+        }
+    }
+
+    @each $prop-name, $prop-val in $justifications {
+        &.pk-justify-#{$prop-name} {
+            justify-content: $prop-val;
+        }
+    }
+
+    &.pk-no-gutter {
+        margin: 0;
+    }
+
+    .no-flexbox &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
 }
 
+.pk-grid-vertical {
+    @extend .pk-grid;
+    flex-direction: column;
+}
+
+.pk-grid-reverse {
+    @extend .pk-grid;
+    flex-direction: row-reverse;
+    &.pk-grid-vertical {
+        flex-direction: column-reverse;
+    }
+}
+
+.pk-grid-vertical-reverse {
+    @extend .pk-grid-vertical;
+    flex-direction: column-reverse;
+}
+
+// Block
 .pk-block {
     box-sizing: border-box;
-    flex: 0 1 auto;
+    padding: $block-pad;
+    padding: rem-calc($block-pad);
     background-color: $block-bg;
+    word-wrap: break-word;
+
+    margin: $fluid-gutter-vert-half $fluid-gutter-half;
+
+    flex: 0 1 auto;
+
+    @each $prop-name, $prop-val in $alignments {
+        &.pk-align-#{$prop-name} {
+            align-self: $prop-val;
+        }
+    }
+
+    &.pk-no-gutter {
+        margin: 0;
+    }
+
+    .no-flexbox & {
+        float: left;
+    }
 }
 
-.pk-block ~ .pk-block {
-    border-left: $gutter-size solid transparent;
-    border-left: rem-calc($gutter-size) solid transparent;
+.pk-no-gutter {
+    margin: 0;
 }
