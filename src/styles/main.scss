@@ -31,32 +31,32 @@ $rem-base: strip-unit($base-font-size*0.16) * 1px;
     @return $remValues;
 }
 
-// @mixin rem-fallback($property, $values...) {
-//     $max: length($values);
-//     $pxValues: '';
-//     $remValues: '';
+@mixin rem-fallback($property, $values...) {
+    $max: length($values);
+    $pxValues: '';
+    $remValues: '';
 
-//     @for $i from 1 through $max {
-//         $value: strip-unit(nth($values, $i));
-//         $pxValues: #{$pxValues + $value*16}px;
+    @for $i from 1 through $max {
+        $value: strip-unit(nth($values, $i));
+        $pxValues: #{$pxValues + $value}px;
 
-//         @if $i < $max {
-//             $pxValues: #{$pxValues + " "};
-//         }
-//     }
+        @if $i < $max {
+            $pxValues: #{$pxValues + " "};
+        }
+    }
 
-//     @for $i from 1 through $max {
-//         $value: strip-unit(nth($values, $i));
-//         $remValues: #{$remValues + $value}rem;
+    @for $i from 1 through $max {
+        $value: rem-calc(nth($values, $i));
+        $remValues: #{$remValues + $value};
 
-//         @if $i < $max {
-//             $remValues: #{$remValues + " "};
-//         }
-//     }
+        @if $i < $max {
+            $remValues: #{$remValues + " "};
+        }
+    }
 
-//     #{$property}: $pxValues;
-//     #{$property}: $remValues;
-// }
+    #{$property}: $pxValues;
+    #{$property}: $remValues;
+}
 
 
 /////////////////
@@ -94,12 +94,16 @@ $block-pad: 10px;
 // Make col/row widths/heights
 @for $i from 1 through $columns {
     @for $j from 1 through $columns {
-        .pk-w-#{$i}-#{$j} {
+        .pk.w-#{$i}-#{$j} {
             width: ((($i/$j) * 100%)-$fluid-gutter-size);
         }
 
-        .pk-v-#{$i}-#{$j} {
+        .pk.v-#{$i}-#{$j} {
             height: ($i/$j) * 100vh;
+        }
+
+        .pk.h-#{$i}-#{$j} {
+            height: ((($i/$j) * 100%)-$fluid-gutter-vert-size);
         }
     }
 }
@@ -140,35 +144,33 @@ body {
 }
 
 // Page (to be removed?)
-.pk-page {
+.pk.page {
     max-width: $page-width;
     margin: 0 auto;
     background-color: $page-bg;
-    padding: $page-pad;
-    padding: rem-calc($page-pad);
     box-sizing: border-box;
+    @include rem-fallback(padding, $page-pad);
 }
 
 // Grid
-.pk-grid {
+.pk.grid {
     display: flex;
     background-color: $grid-bg;
-    padding: $grid-pad;
-    padding: rem-calc($grid-pad);
+    @include rem-fallback(padding, $grid-pad);
 
     @each $prop-name, $prop-val in $alignments {
-        &.pk-align-#{$prop-name} {
+        &.pk.align-#{$prop-name} {
             align-items: $prop-val;
         }
     }
 
     @each $prop-name, $prop-val in $justifications {
-        &.pk-justify-#{$prop-name} {
+        &.pk.justify-#{$prop-name} {
             justify-content: $prop-val;
         }
     }
 
-    &.pk-no-gutter {
+    &.pk.no-gutter {
         margin: 0;
     }
 
@@ -179,43 +181,42 @@ body {
     }
 }
 
-.pk-grid-vertical {
-    @extend .pk-grid;
+.pk.grid-vertical {
+    @extend .grid;
     flex-direction: column;
 }
 
-.pk-grid-reverse {
-    @extend .pk-grid;
+.pk.grid-reverse {
+    @extend .grid;
     flex-direction: row-reverse;
-    &.pk-grid-vertical {
+    &.pk.grid-vertical {
         flex-direction: column-reverse;
     }
 }
 
-.pk-grid-vertical-reverse {
-    @extend .pk-grid-vertical;
+.pk.grid-vertical-reverse {
+    @extend .grid-vertical;
     flex-direction: column-reverse;
 }
 
 // Block
-.pk-block {
+.pk.block {
     box-sizing: border-box;
-    padding: $block-pad;
-    padding: rem-calc($block-pad);
     background-color: $block-bg;
     word-wrap: break-word;
+    @include rem-fallback(padding, $block-pad);
 
     margin: $fluid-gutter-vert-half $fluid-gutter-half;
 
     flex: 0 1 auto;
 
     @each $prop-name, $prop-val in $alignments {
-        &.pk-align-#{$prop-name} {
+        &.pk.align-#{$prop-name} {
             align-self: $prop-val;
         }
     }
 
-    &.pk-no-gutter {
+    &.pk.no-gutter {
         margin: 0;
     }
 
@@ -224,6 +225,6 @@ body {
     }
 }
 
-.pk-no-gutter {
+.pk.no-gutter {
     margin: 0;
 }
