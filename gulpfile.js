@@ -33,7 +33,7 @@ gulp.task('serve', ['styles', 'bowerCopy'], function() {
         server: "./examples"
     });
 
-    gulp.watch("src/styles/*.scss", ['styles']);
+    gulp.watch("./src/styles/*.scss", ['styles']);
     gulp.watch("examples/*.html", ['wiredep']);
     gulp.watch("bower.json", ['bowerCopy']);
 });

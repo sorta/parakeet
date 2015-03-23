@@ -3,20 +3,20 @@
 @import "default/variables";
 @import "default/mixins";
 
-.pk.theme-parakeet {
+.theme-parakeet {
     body {
         background-color: $body-background-color;
     }
 
-    .pk.page {
+    .page {
         background-color: $page-background-color;
     }
 
-    .pk.grid {
+    .grid {
         background-color: $grid-background-color;
     }
 
-    .pk.block {
+    .block {
         background-color: $block-background-color;
     }
 }
