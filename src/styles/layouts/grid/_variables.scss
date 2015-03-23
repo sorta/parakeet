@@ -1,0 +1,35 @@
+$columns: 12;
+
+$gutter-size: 20px;
+$gutter-half: ($gutter-size/2);
+
+$fluid-gutter-size: 2%;
+$fluid-gutter-half: ($fluid-gutter-size/2);
+
+$fluid-gutter-view-height-size: 2vh;
+$fluid-gutter-view-height-half: ($fluid-gutter-view-height-size/2);
+
+$fluid-gutter-view-width-size: 2vw;
+$fluid-gutter-view-width-half: ($fluid-gutter-view-width-size/2);
+
+$page-pad: 10px;
+$grid-pad: 10px;
+$block-pad: 10px;
+
+$alignments: (
+    start: flex-start,
+    end: flex-end,
+    center: center,
+    baseline: baseline,
+    stretch: stretch,
+    inherit: inherit
+);
+
+$justifications: (
+    start: flex-start,
+    end: flex-end,
+    center: center,
+    around: space-around,
+    between: space-between,
+    inherit: inherit
+);
