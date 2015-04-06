@@ -2,9 +2,7 @@ var gulp = require('gulp'),
     gulpLoadPlugins = require('gulp-load-plugins'),
     plugins = gulpLoadPlugins(),
     browserSync = require('browser-sync')
-    reload = browserSync.reload
-    mainBowerFiles = require('main-bower-files')
-    wiredep = require('wiredep').stream;
+    reload = browserSync.reload;
 
 gulp.task('styles', function () {
     return gulp.src('src/styles/main.scss')
@@ -21,26 +19,18 @@ gulp.task('styles', function () {
         .pipe(reload({stream: true}));
 });
 
-gulp.task('wiredep', function () {
+gulp.task('htmlReload', function () {
     return gulp.src('examples/*.html')
-        //.pipe(wiredep())
-        //.pipe(gulp.dest('examples'))
         .pipe(reload({stream: true}));
 });
 
-gulp.task('serve', ['styles', 'bowerCopy'], function() {
+gulp.task('serve', ['styles'], function() {
     browserSync({
         server: "./examples"
     });
 
     gulp.watch("./src/styles/*.scss", ['styles']);
-    gulp.watch("examples/*.html", ['wiredep']);
-    gulp.watch("bower.json", ['bowerCopy']);
-});
-
-gulp.task('bowerCopy', function () {
-    return gulp.src(mainBowerFiles())
-        .pipe(gulp.dest('examples/bower_components'));
+    gulp.watch("examples/*.html", ['htmlReload']);
 });
 
 gulp.task('default', function() {
